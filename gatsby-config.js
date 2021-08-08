@@ -3,5 +3,5 @@ module.exports = {
     siteUrl: "https://www.yourdomain.tld",
     title: "Ethereum Fees",
   },
-  plugins: ["gatsby-plugin-theme-ui", "gatsby-plugin-react-helmet"],
+  plugins: ["gatsby-plugin-react-helmet","@chakra-ui/gatsby-plugin"],
 };
