@@ -60,12 +60,12 @@ function IndexPage() {
               {latestBlock ? latestBlock.baseFee : "?"} Gwei
             </StatNumber>
             <StatHelpText>
-              {percentageChange && (
+              {percentageChange !== undefined && percentageChange !== 0 && (
                 <StatArrow
                   type={percentageChange > 0 ? "increase" : "decrease"}
                 />
               )}
-              {percentageChange ? percentageChange.toFixed(2) : "?"}% in the
+              {percentageChange !== undefined ? percentageChange.toFixed(2) : "?"}% in the
               last 100 blocks
             </StatHelpText>
           </Stat>
