@@ -29,7 +29,7 @@ function IndexPage() {
       setBlocks(
         result.baseFeePerGas.map((b, i) => ({
           block: result.oldestBlock + i,
-          baseFee: parseInt(formatUnits(b, "gwei"), 16),
+          baseFee: parseFloat(formatUnits(b, "gwei"), 10).toFixed(2),
         }))
       );
     });
