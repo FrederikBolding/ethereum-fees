@@ -15,6 +15,7 @@ import {
 import { Chart } from "../components/Chart";
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
+import Seo from "../components/SEO";
 
 const provider = new StaticJsonRpcProvider(
   "https://api.mycryptoapi.com/eth",
@@ -44,6 +45,7 @@ function IndexPage() {
 
   return (
     <Box p={8}>
+      <Seo />
       <VStack>
         <Heading>Ethereum Fees</Heading>
         <Chart data={blocks} />
