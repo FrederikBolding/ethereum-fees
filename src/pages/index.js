@@ -29,7 +29,7 @@ function IndexPage() {
     provider.send("eth_feeHistory", [100, "latest", []]).then((result) => {
       setBlocks(
         result.baseFeePerGas.map((b, i) => ({
-          block: result.oldestBlock + i,
+          block: parseInt(result.oldestBlock, 16) + i,
           baseFee: parseFloat(formatUnits(b, "gwei"), 10).toFixed(2),
         }))
       );
@@ -67,8 +67,10 @@ function IndexPage() {
                   type={percentageChange > 0 ? "increase" : "decrease"}
                 />
               )}
-              {percentageChange !== undefined ? percentageChange.toFixed(2) : "?"}% in the
-              last 100 blocks
+              {percentageChange !== undefined
+                ? percentageChange.toFixed(2)
+                : "?"}
+              % in the last 100 blocks
             </StatHelpText>
           </Stat>
         </StatGroup>
