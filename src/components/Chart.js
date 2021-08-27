@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box } from "@chakra-ui/react";
 import {
   LineChart,
@@ -13,6 +13,11 @@ export const Chart = ({ data }) => {
   const longestLabelLength = data
     .map((c) => c.baseFee.toString())
     .reduce((acc, cur) => (cur.length > acc ? cur.length : acc), 0);
+
+  const [min, max] = useMemo(() => {
+    const values = data.map(item => item.baseFee);
+    return [Math.min(...values), Math.max(...values)];
+  }, [data]);
 
   return (
     <Box w="70%" flex="1">
@@ -29,8 +34,8 @@ export const Chart = ({ data }) => {
           <YAxis
             width={longestLabelLength * 14}
             domain={[
-              (dataMin) => Math.max(0, Math.round(dataMin * 0.8)),
-              (dataMax) => Math.round(dataMax * 1.2),
+              Math.max(0, Math.round(min * 0.8)),
+              Math.round(max * 1.2)
             ]}
           />
           <Line
