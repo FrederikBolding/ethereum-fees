@@ -15,6 +15,7 @@ import {
 import { Chart } from "../components/Chart";
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
+import { estimateFees } from "@mycrypto/gas-estimation";
 import Seo from "../components/SEO";
 
 const provider = new StaticJsonRpcProvider(
@@ -22,18 +23,23 @@ const provider = new StaticJsonRpcProvider(
   1
 );
 
+const formatGwei = (value, decimals = 2) =>
+  parseFloat(formatUnits(value, "gwei"), 10).toFixed(decimals);
+
 function IndexPage() {
   const [blocks, setBlocks] = useState([]);
+  const [estimate, setEstimate] = useState(undefined);
 
   useEffect(() => {
     provider.send("eth_feeHistory", [100, "latest", []]).then((result) => {
       setBlocks(
         result.baseFeePerGas.map((b, i) => ({
           block: parseInt(result.oldestBlock, 16) + i,
-          baseFee: parseFloat(formatUnits(b, "gwei"), 10).toFixed(2),
+          baseFee: formatGwei(b),
         }))
       );
     });
+    estimateFees(provider).then((e) => setEstimate(e));
   }, []);
 
   const oldestBlock = blocks.length > 0 ? blocks[0] : undefined;
@@ -72,6 +78,26 @@ function IndexPage() {
                 : "?"}
               % in the last 100 blocks
             </StatHelpText>
+          </Stat>
+          <Stat>
+            <StatLabel>Recommended Max Fee</StatLabel>
+            <StatNumber>
+              {estimate?.maxFeePerGas
+                ? formatGwei(estimate.maxFeePerGas, 0)
+                : "?"}{" "}
+              Gwei
+            </StatNumber>
+            <StatHelpText>Based on the latest base fee</StatHelpText>
+          </Stat>
+          <Stat>
+            <StatLabel>Recommended Priority Fee</StatLabel>
+            <StatNumber>
+              {estimate?.maxPriorityFeePerGas
+                ? formatGwei(estimate.maxPriorityFeePerGas, 0)
+                : "?"}{" "}
+              Gwei
+            </StatNumber>
+            <StatHelpText>Based on fees paid in the last 10 blocks</StatHelpText>
           </Stat>
         </StatGroup>
         <Text>
