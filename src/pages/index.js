@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Text,
-  Heading,
   Stat,
   StatGroup,
   StatLabel,
@@ -17,6 +16,7 @@ import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { estimateFees } from "@mycrypto/gas-estimation";
 import Seo from "../components/SEO";
+import { Header } from "../components/Header";
 
 const provider = new StaticJsonRpcProvider(
   "https://api.mycryptoapi.com/eth",
@@ -53,10 +53,20 @@ function IndexPage() {
     <Box p={8}>
       <Seo />
       <VStack>
-        <Heading>Ethereum Fees</Heading>
-        <Chart data={blocks} />
+        <Box w={{ base: "100%", xl: "80%" }}>
+          <Header />
+        </Box>
+        <Box
+          w={{ base: "100%", xl: "80%" }}
+          minH="50vh"
+          height="50vh"
+          flex="1"
+          pr="2"
+        >
+          <Chart data={blocks} />
+        </Box>
         <StatGroup
-          w="70%"
+          w={{ base: "100%", xl: "80%" }}
           borderRadius="12px"
           border="1px"
           p="3"
@@ -97,10 +107,17 @@ function IndexPage() {
                 : "?"}{" "}
               Gwei
             </StatNumber>
-            <StatHelpText>Based on fees paid in the last 10 blocks</StatHelpText>
+            <StatHelpText>
+              Based on fees paid in the last 10 blocks
+            </StatHelpText>
           </Stat>
         </StatGroup>
         <Text>
+          Tool by{" "}
+          <Link isExternal href="https://twitter.com/FrederikBolding">
+            Frederik Bolding
+          </Link>
+          {" | "}
           Powered by{" "}
           <Link isExternal href="https://mycrypto.com">
             MyCrypto
