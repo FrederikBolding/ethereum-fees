@@ -21,7 +21,7 @@ export const Chart = ({ data }) => {
 
   // Hack for responsiveness: https://github.com/recharts/recharts/issues/1767#issuecomment-598607012
   return (
-    <Box style={{ position: "relative", width: "100%", height: "100%" }}>
+    <Box minH="50vh" height="50vh" style={{ position: "relative" }}>
       <Box
         style={{
           position: "absolute",

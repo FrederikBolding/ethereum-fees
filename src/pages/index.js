@@ -32,6 +32,7 @@ function IndexPage() {
 
   useEffect(() => {
     provider.send("eth_feeHistory", [100, "latest", []]).then((result) => {
+      console.log(result);
       setBlocks(
         result.baseFeePerGas.map((b, i) => ({
           block: parseInt(result.oldestBlock, 16) + i,
@@ -58,8 +59,6 @@ function IndexPage() {
         </Box>
         <Box
           w={{ base: "100%", xl: "80%" }}
-          minH="50vh"
-          height="50vh"
           flex="1"
           pr="2"
         >
